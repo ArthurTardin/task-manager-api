@@ -7,5 +7,5 @@ public class ProjectMember
     public int Id { get; set; }
     public User User { get; set; } = null!;
     public Project Project { get; set; } = null!;
-    public ProjectMemberRole Role { get; set; }
+    public ProjectMemberRole Role { get; set; } = ProjectMemberRole.Member;
 }

@@ -8,8 +8,8 @@ public class TaskItem
     public string Description { get; set; } = "";
     public DateTime StartDate { get; set; }
     public DateTime DueDate { get; set; }
-    public  TaskItemStatus Status { get; set; }
-    public TaskItemPriority Priority { get; set; }
+    public  TaskItemStatus Status { get; set; } = TaskItemStatus.Backlog;
+    public TaskItemPriority Priority { get; set; } = TaskItemPriority.Medium;
     public User Creator { get; set; } = null!;
     public User? Assignee { get; set; }
     public List<User> Contributors { get; set; } = new();
