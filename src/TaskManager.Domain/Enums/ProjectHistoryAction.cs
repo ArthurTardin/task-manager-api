@@ -2,6 +2,7 @@ namespace TaskManager.Domain.Enums;
 
 public enum ProjectHistoryAction
 {
+    Undefined = 0,
     MemberAdded = 1,
     MemberRemoved = 2,
     TaskCreated = 3,
