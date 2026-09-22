@@ -14,4 +14,7 @@ public class TaskItem
     public User? Assignee { get; set; }
     public List<User> Contributors { get; set; } = new();
     public Project Project { get; set; } = null!;
+    public int CreatorId { get; set; }
+    public int? AssigneeId { get; set; }
+    public int ProjectId { get; set; }
 }
