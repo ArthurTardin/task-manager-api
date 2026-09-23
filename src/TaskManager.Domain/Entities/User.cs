@@ -11,6 +11,6 @@ public class User
         get { return _email;}
         set { _email = value.ToLowerInvariant();}
     }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public UserStatus Status { get; set; } = UserStatus.Active;
 }
