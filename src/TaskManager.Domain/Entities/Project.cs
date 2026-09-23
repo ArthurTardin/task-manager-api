@@ -9,6 +9,7 @@ public class Project
     public string Description { get; set; } = "";
     public DateTime CreatedAt { get; set; }
     public ProjectStatus Status { get; set; } = ProjectStatus.Scheduled;
-    public User Creator { get; set; } = null!;
+    public User? Creator { get; set; }
+    public int? CreatorId { get; set; }
     public List<TaskItem> Tasks { get; set; } = new();
 }

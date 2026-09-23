@@ -4,5 +4,5 @@ namespace TaskManager.Application.Interfaces;
 
 public interface IProjectRepository
 {
-   Task<Project?> GetById(int id);
+   Task<Project?> GetByIdAsync(int id);
 }

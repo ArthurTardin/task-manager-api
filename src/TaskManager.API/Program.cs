@@ -1,7 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+using TaskManager.Application.Interfaces;
+using TaskManager.Infrastructure.Data;
+using TaskManager.Infrastructure.Repositories;
+using TaskManager.Infrastructure.UnitOfWork;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddDbContext<TaskManagerDbContext>(options =>
+{
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    );
+});
+
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

@@ -27,7 +27,7 @@ public class TaskService : ITaskService
     }
     public async Task<TaskDto> CreateTask(CreateTaskDto dto)
     {
-        var project = await _projectRepository.GetById(dto.ProjectId);
+        var project = await _projectRepository.GetByIdAsync(dto.ProjectId);
 
         if (project is null)
         {
@@ -38,7 +38,7 @@ public class TaskService : ITaskService
 
         if (dto.AssigneeId.HasValue)
         {
-            assignee = await _userRepository.GetById(dto.AssigneeId.Value);
+            assignee = await _userRepository.GetByIdAsync(dto.AssigneeId.Value);
 
             if (assignee is null)
             {
@@ -47,7 +47,7 @@ public class TaskService : ITaskService
         }
 
         var creatorId = _currentUserService.UserId;
-        var creator = await _userRepository.GetById(creatorId);
+        var creator = await _userRepository.GetByIdAsync(creatorId);
 
         if (creator is null)
         {
