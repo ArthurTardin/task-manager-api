@@ -58,8 +58,8 @@ public class TaskService : ITaskService
         {
             Title = dto.Title,
             Description = dto.Description,
-            StartDate = dto.StartDate,
-            DueDate = dto.DueDate,
+            StartDate = dto.StartDate.UtcDateTime,
+            DueDate = dto.DueDate.UtcDateTime,
             Priority = dto.Priority,
             Assignee = assignee,
             Creator = creator,

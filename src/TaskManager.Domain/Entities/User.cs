@@ -9,7 +9,7 @@ public class User
     public string Email
     {
         get { return _email;}
-        set { _email = value.ToLower();}
+        set { _email = value.ToLowerInvariant();}
     }
     public DateTime CreatedAt { get; set; }
     public UserStatus Status { get; set; } = UserStatus.Active;
