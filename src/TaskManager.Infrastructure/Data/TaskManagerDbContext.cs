@@ -1,13 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using TaskManager.Infrastructure.Identity;
 
 namespace TaskManager.Infrastructure.Data;
 
-public class TaskManagerDbContext : DbContext
+public class TaskManagerDbContext : IdentityDbContext<ApplicationUser>
 {
     public TaskManagerDbContext(DbContextOptions<TaskManagerDbContext> options) : base(options) { }
 
-    public DbSet<User> Users { get; set; }
+    public DbSet<User> DomainUsers { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<TaskItem> Tasks { get; set; }
     public DbSet<ProjectMember> ProjectMembers { get; set; }
@@ -115,5 +117,12 @@ public class TaskManagerDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasIndex(user => user.Email)
             .IsUnique();
+        
+        
+        modelBuilder.Entity<ApplicationUser>()
+            .HasOne(user => user.User)
+            .WithOne()
+            .HasForeignKey<ApplicationUser>(user => user.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

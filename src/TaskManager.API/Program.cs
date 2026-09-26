@@ -1,6 +1,10 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using TaskManager.Application.Interfaces;
 using TaskManager.Infrastructure.Data;
+using TaskManager.Infrastructure.Identity;
 using TaskManager.Infrastructure.Repositories;
 using TaskManager.Infrastructure.UnitOfWork;
 
@@ -12,6 +16,38 @@ builder.Services.AddDbContext<TaskManagerDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     );
 });
+
+builder.Services
+    .AddIdentityCore<ApplicationUser>()
+    .AddEntityFrameworkStores<TaskManagerDbContext>();
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+       options.TokenValidationParameters = new TokenValidationParameters
+       {
+           IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(
+                    builder.Configuration["Authentication:Jwt:Key"]!
+                )
+           ),
+
+           ValidateIssuer = true,
+           ValidIssuer = "TaskManager.API",
+
+            ValidateAudience = true,
+            ValidAudience = "TaskManager.API",
+
+            ValidateLifetime = true,
+       };
+    });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
